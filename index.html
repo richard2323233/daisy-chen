@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daisy &amp; Chen · Save the Date</title>
+<meta name="description" content="14 · 09 · 2027 — Belmond La Residencia, Deià, Mallorca">
+<meta property="og:title" content="Daisy &amp; Chen · Save the Date">
+<meta property="og:description" content="14 · 09 · 2027 — Belmond La Residencia, Deià, Mallorca">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/share.jpg">
+<meta itemprop="name" content="Daisy &amp; Chen · Save the Date">
+<meta itemprop="description" content="14 · 09 · 2027 — Belmond La Residencia, Deià, Mallorca">
+<meta itemprop="image" content="assets/share.jpg">
+<link rel="apple-touch-icon" href="assets/share.jpg">
+<link rel="icon" href="assets/share.jpg">
+<meta name="format-detection" content="telephone=no,date=no,address=no">
+<meta name="theme-color" content="#F3ECDE">
+<meta name="robots" content="noindex,nofollow">
+<!-- 字体都在 assets/fonts/ 里，不依赖任何外部服务器（国内微信也能正常显示） -->
+<link rel="preload" href="assets/fonts/cormorant-garamond.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* ───────────── 字体（本地文件） ─────────────
+   中文用的是思源宋体的“精简子集”，只包含本页出现的汉字。
+   以后如果改了中文文案、出现新的字，新字会退回系统字体，需要重新生成子集。 */
+@font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:300 700;font-display:swap;src:url(assets/fonts/cormorant-garamond.woff2) format("woff2")}
+@font-face{font-family:"Cormorant Garamond";font-style:italic;font-weight:300 700;font-display:swap;src:url(assets/fonts/cormorant-garamond-italic.woff2) format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/jost.woff2) format("woff2")}
+@font-face{font-family:"Noto Serif SC";font-style:normal;font-weight:200 900;font-display:swap;src:url(assets/fonts/noto-serif-sc.woff2) format("woff2")}
+
+/* ───────────── 颜色与字体：想调风格改这里 ───────────── */
+:root{
+  --wall:#F3ECDE;                    /* 石灰墙 */
+  --ink:#2B2924;                     /* 文字：暖黑 */
+  --ink-2:rgba(43,41,36,.66);
+  --ink-3:rgba(43,41,36,.42);
+  --hair:rgba(43,41,36,.2);          /* 细线 */
+  --accent:#BF912B;                  /* 柠檬赭：只用在 & 和少数细节 */
+  --shadow:#43462C;                  /* 橄榄枝影 */
+  --serif:"Cormorant Garamond","Noto Serif SC","Songti SC","STSong",Georgia,serif;
+  --sans:"Jost","Noto Serif SC","PingFang SC","Helvetica Neue",Arial,sans-serif;
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .27 0 0 0 0 .2 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --gold:0; --dusk:0; --shade:1;     /* 由滚动驱动：黄昏暖度 / 暮色 / 枝影 */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--wall);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a{color:inherit}
+
+/* ───────────── 墙面、光与枝影（固定在背后） ───────────── */
+.wall{position:fixed;top:0;right:0;bottom:0;left:0;overflow:hidden;z-index:0;background:var(--wall);pointer-events:none}
+.wall .light{position:absolute;top:0;right:0;bottom:0;left:0;background:
+  linear-gradient(116deg, rgba(255,251,238,0) 26%, rgba(255,251,238,.72) 40%, rgba(255,251,238,.72) 58%, rgba(255,251,238,0) 74%),
+  radial-gradient(85% 60% at 26% 20%, rgba(255,252,243,.95), rgba(255,252,243,0) 70%)}
+.wall .tint-gold{position:absolute;top:0;right:0;bottom:0;left:0;background:linear-gradient(180deg,#F6D7A6,#F2C592);opacity:calc(var(--gold) * .3)}
+.wall .tint-dusk{position:absolute;top:0;right:0;bottom:0;left:0;background:linear-gradient(180deg,#BDB5C6,#E8BDA2);opacity:calc(var(--dusk) * .3)}
+.wall .grain{position:absolute;top:0;right:0;bottom:0;left:0;background-image:var(--noise);opacity:.3;mix-blend-mode:multiply}
+.shadows{position:absolute;top:-40px;right:-40px;bottom:-40px;left:-40px;opacity:var(--shade);will-change:transform}
+.branch{
+  position:absolute; color:var(--shadow); transform-origin:0 50%;
+  opacity:var(--o,.18); filter:blur(var(--b,6px));
+  animation:sway var(--d,10s) ease-in-out infinite alternate; will-change:transform;
+}
+.branch svg{display:block;width:100%;height:100%;overflow:visible}
+@keyframes sway{
+  from{transform:rotate(calc(var(--a) - 1.3deg)) scale(var(--k,1))}
+  to  {transform:rotate(calc(var(--a) + 1.8deg)) scale(var(--k,1))}
+}
+
+/* ───────────── 顶部 ───────────── */
+.top{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;
+  padding:calc(18px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 0 calc(24px + env(safe-area-inset-left))}
+.mono{font:400 15px/1 var(--serif);letter-spacing:.34em;color:var(--ink-2)}
+.lang{padding:8px 4px;font:500 11px/1 var(--sans);letter-spacing:.24em;color:var(--ink-3)}
+.lang b{font-weight:500;transition:color .3s}
+.lang b.on{color:var(--ink)}
+.lang i{font-style:normal;margin:0 .5em;opacity:.6}
+
+main{position:relative;z-index:1}
+.label{font:500 11px/1 var(--sans);letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:var(--ink-2)}
+html[lang="zh-CN"] .label[data-zh]{font-size:12px;letter-spacing:.6em;text-indent:.6em;font-weight:400}
+
+/* 渐入 */
+.rv{opacity:0;transform:translateY(18px);transition:opacity 1.5s cubic-bezier(.2,.6,.2,1),transform 1.5s cubic-bezier(.2,.6,.2,1);transition-delay:calc(var(--i,0) * 150ms)}
+.in .rv,.rv.in{opacity:1;transform:none}
+
+/* ───────────── 封面 ───────────── */
+.cover{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 28px 120px;position:relative}
+.greet{margin-bottom:26px;font:italic 400 19px/1.2 var(--serif);color:var(--ink-2)}
+html[lang="zh-CN"] .greet{font-family:"Songti SC","STSong","Noto Serif CJK SC","Source Han Serif SC",serif;font-style:normal;font-weight:300;font-size:16px;letter-spacing:.2em}
+.for{margin-top:16px;font:italic 400 18px/1.2 var(--serif);color:var(--ink-2);letter-spacing:.02em}
+html[lang="zh-CN"] .for{font-style:normal;font-weight:300;font-size:13px;letter-spacing:.42em;text-indent:.42em}
+.names{margin:clamp(26px,6vh,56px) 0 clamp(28px,6.5vh,60px);font:300 clamp(68px,20vw,150px)/.9 var(--serif);letter-spacing:-.012em}
+.names span{display:block}
+.names .amp{font-style:italic;font-size:.46em;line-height:1.5;color:var(--accent)}
+.names .rv{transition-duration:1.9s;filter:blur(10px);transition-property:opacity,transform,filter}
+.in .names .rv{filter:blur(0)}
+.when{font:400 clamp(17px,4.7vw,22px)/1 var(--serif);letter-spacing:.34em;text-indent:.34em;font-variant-numeric:lining-nums}
+.where{margin-top:16px}
+.scroll{position:absolute;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;transition:opacity .6s}
+.scroll.rv{transform:translate(-50%,10px)} .in .scroll.rv{transform:translate(-50%,0)}
+.scroll.gone{opacity:0 !important}
+.scroll i{display:block;width:1px;height:46px;background:var(--hair);position:relative;overflow:hidden}
+.scroll i::after{content:"";position:absolute;left:0;top:-50%;width:1px;height:50%;background:var(--ink);animation:drip 2.4s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes drip{0%{top:-50%}70%,100%{top:100%}}
+.scroll span{font:500 9.5px/1 var(--sans);letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ───────────── 日落：钉住的一屏，滚动 = 时间 ───────────── */
+.journey{height:320vh;height:calc(100dvh + 220vh);position:relative}
+.pin{
+  position:-webkit-sticky;position:sticky;top:0;height:100vh;height:100dvh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(22px,4.6vh,44px);
+  padding:calc(64px + env(safe-area-inset-top)) 26px calc(22px + env(safe-area-inset-bottom));
+}
+.arch-wrap{position:relative;flex:none;--ah:min(43vh,440px);height:var(--ah);width:calc(var(--ah) * 300 / 440)}
+.arch-wrap::before{content:"";position:absolute;top:-9px;right:-9px;bottom:-9px;left:-9px;border:1px solid var(--hair);border-radius:999px 999px 5px 5px}
+.arch{position:absolute;top:0;right:0;bottom:0;left:0;border-radius:999px 999px 2px 2px;overflow:hidden;background:#C9D9DA;transform:translateZ(0)}
+.arch svg{display:block;width:100%;height:100%}
+.arch::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(43,41,36,.1), inset 9px 14px 26px -14px rgba(40,30,12,.5)}
+.arch::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0;z-index:1;background-image:var(--noise);opacity:.55;mix-blend-mode:multiply}
+.shimmer line{animation:drift 7s ease-in-out infinite alternate}
+.shimmer line:nth-child(2n){animation-duration:9s;animation-direction:alternate-reverse}
+@keyframes drift{from{transform:translateX(-5px)}to{transform:translateX(6px)}}
+
+.caps{position:relative;flex:none;width:min(100%,430px);height:clamp(192px,28vh,222px)}
+.cap{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:var(--o,0);transform:translateY(calc((1 - var(--o,0)) * 14px));pointer-events:none}
+.cap-title{margin-top:18px;font:300 clamp(27px,7.4vw,38px)/1.12 var(--serif);letter-spacing:.005em}
+html[lang="zh-CN"] .cap-title[data-zh]{font-family:"Noto Serif SC","Songti SC",serif;font-size:clamp(22px,6vw,30px);letter-spacing:.14em;line-height:1.3}
+.cap-sub{margin-top:10px;font:italic 400 18px/1.25 var(--serif);color:var(--ink-2)}
+html[lang="zh-CN"] .cap-sub[data-zh]{font-style:normal;font-weight:300;font-size:14px;letter-spacing:.3em;text-indent:.3em}
+.cap-body{margin-top:14px;max-width:310px;font:400 17px/1.4 var(--serif);color:var(--ink-2)}
+html[lang="zh-CN"] .cap-body{font-weight:300;font-size:14px;line-height:1.8;letter-spacing:.1em}
+.coords{margin-top:16px;font:500 10.5px/1 var(--sans);letter-spacing:.3em;text-indent:.3em;color:var(--ink-3);font-variant-numeric:lining-nums}
+.count{display:flex;margin-top:24px}
+.count div{min-width:66px;padding:0 10px;border-left:1px solid var(--hair)}
+.count div:first-child{border-left:0}
+.count b{display:block;font:300 31px/1 var(--serif);font-variant-numeric:lining-nums tabular-nums}
+.count span{display:block;margin-top:9px;font:500 9.5px/1 var(--sans);letter-spacing:.28em;text-indent:.28em;text-transform:uppercase;color:var(--ink-3)}
+html[lang="zh-CN"] .count span{font-size:11px;letter-spacing:.2em;text-indent:.2em}
+
+/* ───────────── 结尾 ───────────── */
+.finale{min-height:92vh;min-height:92svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 28px calc(120px + env(safe-area-inset-bottom));position:relative}
+.bye{margin-top:26px;font:italic 300 clamp(46px,13vw,104px)/1.02 var(--serif);letter-spacing:-.01em}
+html[lang="zh-CN"] .bye{font-style:normal;font-family:"Noto Serif SC","Songti SC",serif;font-size:clamp(40px,11vw,84px);letter-spacing:.12em;text-indent:.12em}
+.finale .cap-sub{margin-top:22px}
+.actions{margin-top:46px;display:flex;flex-direction:column;gap:12px;width:min(100%,250px)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;height:50px;min-width:176px;padding:0 26px;
+  border:1px solid var(--ink);text-decoration:none;white-space:nowrap;
+  font:500 11px/1 var(--sans);letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;
+  transition:background .35s,color .35s;
+}
+html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font-weight:400}
+.btn.solid{background:var(--ink);color:#F6F1E6}
+.btn.solid:hover{background:transparent;color:var(--ink)}
+.btn:not(.solid):hover{background:var(--ink);color:#F6F1E6}
+.foot{position:absolute;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom));font:500 10px/1 var(--sans);letter-spacing:.36em;text-indent:.36em;color:var(--ink-3);font-variant-numeric:lining-nums}
+
+.toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));z-index:9;max-width:min(86vw,420px);padding:13px 20px;
+  background:var(--ink);color:#F6F1E6;font:400 14px/1.5 var(--serif);letter-spacing:.04em;text-align:center;
+  transform:translate(-50%,16px);opacity:0;pointer-events:none;transition:opacity .4s,transform .4s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:1px solid var(--ink);outline-offset:4px}
+
+/* ───────────── 宽屏：拱窗在左，文字在右 ───────────── */
+@media (min-width:900px) and (min-height:560px){
+  .names{font-size:clamp(110px,11.5vw,176px);line-height:1}
+  .names span{display:inline}
+  .names .amp{font-size:.5em;margin:0 .32em;vertical-align:.12em}
+  .actions{flex-direction:row;width:auto}
+  .actions .btn{min-width:214px}
+  .pin{flex-direction:row;gap:clamp(60px,8vw,130px)}
+  .arch-wrap{--ah:min(70vh,600px)}
+  .caps{width:400px;height:300px}
+  .cap{align-items:flex-start;text-align:left;justify-content:center}
+  .cap .label,.cap .coords,.cap .cap-sub{text-indent:0}
+  .cap-title{font-size:46px}
+  html[lang="zh-CN"] .cap-title[data-zh]{font-size:34px}
+  .cap-body{max-width:340px}
+  .count div:first-child{padding-left:0}
+}
+@media (max-height:600px){ .arch-wrap{--ah:40vh} .cap-title{margin-top:14px} .count{margin-top:16px} }
+@media (prefers-reduced-motion:reduce){
+  .branch,.shimmer line,.scroll i::after{animation:none}
+  .rv{transition:none;opacity:1;transform:none;filter:none !important}
+}
+</style>
+</head>
+<body>
+
+<!-- 微信分享卡片的缩略图：部分版本的微信会取页面里第一张够大的图 -->
+<img src="assets/share.jpg" alt="" width="400" height="400" aria-hidden="true" style="position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none">
+
+<div class="wall" aria-hidden="true">
+  <div class="light"></div>
+  <div class="shadows" id="shadows"></div>
+  <div class="tint-gold"></div>
+  <div class="tint-dusk"></div>
+  <div class="grain"></div>
+</div>
+
+<header class="top">
+  <span class="mono">D · C</span>
+  <button class="lang" id="lang" type="button" aria-label="Switch language"><b data-l="zh">中</b><i>/</i><b data-l="en">EN</b></button>
+</header>
+
+<main>
+  <!-- 封面 -->
+  <section class="cover" id="cover">
+    <p class="greet rv" id="greet" hidden style="--i:0"></p>
+    <p class="label rv" style="--i:1">Save the Date</p>
+    <p class="for rv" style="--i:2" data-zh="敬请预留时间 · 见证我们的婚礼" data-en="for the wedding of"></p>
+    <h1 class="names" aria-label="Daisy &amp; Chen">
+      <span class="rv" style="--i:3">Daisy</span>
+      <span class="amp rv" style="--i:5">&amp;</span>
+      <span class="rv" style="--i:4">Chen</span>
+    </h1>
+    <p class="when rv" style="--i:7">14 · 09 · 2027</p>
+    <p class="label where rv" style="--i:8" data-zh="西班牙 · 马略卡岛" data-en="Deià · Mallorca"></p>
+    <div class="scroll rv" id="scrollHint" style="--i:12"><i></i><span data-zh="向下滑动" data-en="Scroll"></span></div>
+  </section>
+
+  <!-- 日落 -->
+  <section class="journey" id="journey">
+    <div class="pin">
+      <div class="arch-wrap" id="archWrap">
+        <div class="arch">
+          <svg viewBox="0 0 300 440" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sunset over the sea at Deià, Mallorca">
+            <defs>
+              <linearGradient id="skyDay"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A8C5D1"/><stop offset=".62" stop-color="#D5E2DD"/><stop offset="1" stop-color="#F0EDDB"/></linearGradient>
+              <linearGradient id="skyGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8EAEC2"/><stop offset=".45" stop-color="#E6D4B3"/><stop offset=".8" stop-color="#F4CF9A"/><stop offset="1" stop-color="#F6C68B"/></linearGradient>
+              <linearGradient id="skySet"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#566A90"/><stop offset=".42" stop-color="#B7909F"/><stop offset=".74" stop-color="#EDA67F"/><stop offset="1" stop-color="#F5B36C"/></linearGradient>
+              <linearGradient id="skyDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1F2C48"/><stop offset=".5" stop-color="#405079"/><stop offset=".84" stop-color="#957C92"/><stop offset="1" stop-color="#D49F88"/></linearGradient>
+              <linearGradient id="seaDay"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86B5BC"/><stop offset="1" stop-color="#4C8797"/></linearGradient>
+              <linearGradient id="seaGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7C592"/><stop offset=".22" stop-color="#A3B1A6"/><stop offset="1" stop-color="#55808E"/></linearGradient>
+              <linearGradient id="seaSet"  x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EDA774"/><stop offset=".28" stop-color="#8F8A9C"/><stop offset="1" stop-color="#3D5C7A"/></linearGradient>
+              <linearGradient id="seaDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8B7F97"/><stop offset=".32" stop-color="#3E4E70"/><stop offset="1" stop-color="#1E2C46"/></linearGradient>
+              <radialGradient id="sunGlow"><stop offset="0" stop-color="#FFF6D8" stop-opacity=".9"/><stop offset=".28" stop-color="#FFE7AE" stop-opacity=".42"/><stop offset="1" stop-color="#FFE7AE" stop-opacity="0"/></radialGradient>
+              <linearGradient id="hazeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E4" stop-opacity="0"/><stop offset="1" stop-color="#FFF6E4" stop-opacity=".5"/></linearGradient>
+              <linearGradient id="reflG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity=".15"/></linearGradient>
+              <mask id="reflM" maskUnits="userSpaceOnUse" x="-40" y="290" width="80" height="150"><rect x="-40" y="290" width="80" height="150" fill="url(#reflG)"/></mask>
+              <!-- 左侧远岬 + 右侧三层特拉蒙塔纳山脊，由远及近 -->
+              <path id="rL"  d="M-12,259 C22,251 52,247 80,255 C101,261 112,277 130,286 C137,289.500 143,291.500 152,292 L-12,292 Z"/>
+              <path id="rR3" d="M312,148 C282,165 252,200 226,236 C207,262 192,282 172,292 L312,292 Z"/>
+              <path id="rR2" d="M312,198 C290,208 272,229 256,246 C244,259 234,275 220,292 L312,292 Z"/>
+              <path id="rR1" d="M312,243 C297,250 285,262 274,272 C266,280 260,287 252,292 L312,292 Z"/>
+            </defs>
+
+            <g id="sky">
+              <rect width="300" height="294" fill="url(#skyDay)"/>
+              <rect id="skyG" width="300" height="294" fill="url(#skyGold)" opacity="0"/>
+              <rect id="skyS" width="300" height="294" fill="url(#skySet)" opacity="0"/>
+              <rect id="skyD" width="300" height="294" fill="url(#skyDusk)" opacity="0"/>
+            </g>
+            <g id="stars" fill="#FFF8E6" opacity="0"></g>
+            <g id="sun" transform="translate(226 92)">
+              <circle id="glow" r="78" fill="url(#sunGlow)"/>
+              <circle id="disc" r="15" fill="#FFF4CC"/>
+            </g>
+            <g id="sea">
+              <rect y="292" width="300" height="150" fill="url(#seaDay)"/>
+              <rect id="seaG" y="292" width="300" height="150" fill="url(#seaGold)" opacity="0"/>
+              <rect id="seaS" y="292" width="300" height="150" fill="url(#seaSet)" opacity="0"/>
+              <rect id="seaD" y="292" width="300" height="150" fill="url(#seaDusk)" opacity="0"/>
+              <rect y="292" width="300" height=".9" fill="#fff" opacity=".4"/>
+              <g id="refl" opacity="0" fill="#FFE7AE"><g mask="url(#reflM)">
+                <rect x="-10" y="294.500" width="20" height="1.200" rx=".6"/><rect x="-7" y="298.500" width="17" height="1.200" rx=".6"/>
+                <rect x="-12" y="303" width="23" height="1.300" rx=".65"/><rect x="-8" y="308.500" width="19" height="1.400" rx=".7"/>
+                <rect x="-14" y="315" width="26" height="1.500" rx=".75"/><rect x="-9" y="322" width="22" height="1.600" rx=".8"/>
+                <rect x="-16" y="330" width="29" height="1.700" rx=".85"/><rect x="-11" y="339" width="25" height="1.800" rx=".9"/>
+                <rect x="-18" y="349" width="33" height="1.900" rx=".95"/><rect x="-12" y="360" width="28" height="2" rx="1"/>
+                <rect x="-20" y="372" width="36" height="2.100" rx="1.050"/><rect x="-13" y="385" width="30" height="2.200" rx="1.100"/>
+                <rect x="-21" y="399" width="38" height="2.300" rx="1.150"/><rect x="-14" y="414" width="31" height="2.400" rx="1.200"/>
+              </g></g>
+              <g class="shimmer" stroke="#fff" stroke-opacity=".26" stroke-width=".8" stroke-linecap="round">
+                <line x1="22" y1="304" x2="50" y2="304"/><line x1="236" y1="311" x2="266" y2="311"/><line x1="70" y1="326" x2="108" y2="326"/>
+                <line x1="198" y1="346" x2="240" y2="346"/><line x1="30" y1="368" x2="76" y2="368"/><line x1="214" y1="396" x2="268" y2="396"/>
+              </g>
+            </g>
+            <g id="plxFar">
+              <use href="#rL" fill="#B3C2BE"/><use class="dk" href="#rL" fill="#5F6385" opacity="0"/>
+              <use href="#rR3" fill="#B7C5BB"/><use class="dk" href="#rR3" fill="#5A5F80" opacity="0"/>
+            </g>
+            <g id="plxMid"><use href="#rR2" fill="#9AA98F"/><use class="dk" href="#rR2" fill="#3F4464" opacity="0"/></g>
+            <g id="plxNear"><use href="#rR1" fill="#7B8965"/><use class="dk" href="#rR1" fill="#262B45" opacity="0"/></g>
+            <rect id="haze" y="232" width="300" height="60" fill="url(#hazeG)"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="caps">
+        <div class="cap" id="capA" style="--o:1">
+          <p class="label" data-zh="日期" data-en="The Date"></p>
+          <h2 class="cap-title" data-zh="二〇二七年九月十四日" data-en="Tuesday, the fourteenth of September"></h2>
+          <p class="cap-sub" data-zh="星期二" data-en="two thousand twenty-seven"></p>
+          <div class="count" role="timer" aria-live="off">
+            <div><b id="cd-d">–</b><span data-zh="天" data-en="Days"></span></div>
+            <div><b id="cd-h">–</b><span data-zh="时" data-en="Hrs"></span></div>
+            <div><b id="cd-m">–</b><span data-zh="分" data-en="Min"></span></div>
+            <div><b id="cd-s">–</b><span data-zh="秒" data-en="Sec"></span></div>
+          </div>
+        </div>
+        <div class="cap" id="capB">
+          <p class="label" data-zh="地点" data-en="The Place"></p>
+          <h2 class="cap-title">Belmond La Residencia</h2>
+          <p class="cap-sub" data-zh="西班牙 · 马略卡岛 · Deià" data-en="Deià · Mallorca · Spain"></p>
+          <p class="cap-body" data-zh="特拉蒙塔纳山与地中海之间的石头小镇" data-en="A stone village between the Tramuntana mountains and the sea."></p>
+          <p class="coords">39.75° N &nbsp;·&nbsp; 2.65° E</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 结尾 -->
+  <section class="finale" id="finale">
+    <p class="label rv" style="--i:0" data-zh="敬请期待" data-en="Until then"></p>
+    <h2 class="bye rv" style="--i:1" data-zh="马略卡见" data-en="See you in Mallorca."></h2>
+    <p class="cap-sub rv" style="--i:2" data-zh="正式请柬随后奉上" data-en="Formal invitation to follow"></p>
+    <div class="actions rv" style="--i:3">
+      <button class="btn solid" id="cal" type="button" data-zh="加入日历" data-en="Add to calendar"></button>
+      <a class="btn" id="map" target="_blank" rel="noopener" data-zh="查看地图" data-en="View map"></a>
+    </div>
+    <p class="foot">D · C &nbsp;—&nbsp; 14 · 09 · 2027</p>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ───────────── 婚礼信息：要改内容改这里 ───────────── */
+  const EVENT = {
+    title: 'Daisy & Chen — Wedding',
+    startUTC: Date.UTC(2027, 8, 13, 22, 0, 0),      // 2027-09-14 马略卡当地零点 (UTC+2)
+    dateStart: '20270914', dateEnd: '20270915',
+    location: 'Belmond La Residencia, Deià, Mallorca, Spain',
+    mapQuery: 'Belmond La Residencia, Deià, Mallorca',
+    note: 'Save the date! Formal invitation to follow.'
+  };
+  const TEXT = {
+    zh: { greet: n => '亲爱的' + n, wechat: '微信里无法直接加入日历，请点右上角「···」用浏览器打开', cal: '日历文件已生成，打开即可加入日历' },
+    en: { greet: n => 'Dear ' + n + ',', wechat: 'Please open this page in your browser to add the event', cal: 'Calendar file ready — open it to add the event' }
+  };
+
+  const $ = (s, r = document) => r.querySelector(s);
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const params = new URLSearchParams(location.search);
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+
+  /* ───────────── 语言 & 称呼（链接后加 ?to=名字） ───────────── */
+  let lang = params.get('lang');
+  if (lang !== 'zh' && lang !== 'en') lang = (navigator.language || 'zh').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+  const guest = (params.get('to') || '').trim().slice(0, 36);
+  function applyLang() {
+    root.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-zh]').forEach(el => { el.textContent = el.dataset[lang]; });
+    document.querySelectorAll('#lang b').forEach(b => b.classList.toggle('on', b.dataset.l === lang));
+    const g = $('#greet'); g.hidden = !guest; if (guest) g.textContent = TEXT[lang].greet(guest);
+  }
+  $('#lang').addEventListener('click', () => { lang = lang === 'zh' ? 'en' : 'zh'; applyLang(); });
+
+  /* ───────────── 橄榄枝影：程序生成，每次构图一致 ───────────── */
+  const NS = 'http://www.w3.org/2000/svg';
+  function rng(seed) { return () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function branch({ seed, len, x, y, a, o, b, d }) {
+    const R = rng(seed), W = len * 1.2, H = len * 1.1, f = n => n.toFixed(1);
+    const el = document.createElement('div'); el.className = 'branch';
+    el.style.cssText = `left:${x};top:calc(${y} - ${H / 2}px);width:${W}px;height:${H}px;--a:${a}deg;--o:${o};--b:${b}px;--d:${d}s`;
+    const svg = document.createElementNS(NS, 'svg'); svg.setAttribute('viewBox', `0 ${-H / 2} ${W} ${H}`);
+    let leaves = '', stems = '';
+    const leaf = (px, py, ang, l) => {
+      const w = l * .15, c = Math.cos(ang), s = Math.sin(ang);
+      const P = (u, v) => f(px + u * c - v * s) + ',' + f(py + u * s + v * c);
+      leaves += `M${P(0, 0)}C${P(l * .28, -w)} ${P(l * .72, -w * .9)} ${P(l, 0)}C${P(l * .72, w * .9)} ${P(l * .28, w)} ${P(0, 0)}Z`;
+    };
+    const stem = (x0, y0, ang, L, depth) => {
+      const bend = (R() - .5) * L * .42, c = Math.cos(ang), s = Math.sin(ang);
+      const P = t => { const u = 2 * (1 - t) * t * (L / 2) + t * t * L, v = 2 * (1 - t) * t * bend + t * t * bend * .3; return [x0 + u * c - v * s, y0 + u * s + v * c]; };
+      const T = t => { const du = 2 * (1 - 2 * t) * (L / 2) + 2 * t * L, dv = 2 * (1 - 2 * t) * bend + 2 * t * bend * .3; return Math.atan2(du * s + dv * c, du * c - dv * s); };
+      stems += 'M' + P(0).map(f).join(',');
+      for (let i = 1; i <= 10; i++) stems += 'L' + P(i / 10).map(f).join(',');
+      const n = Math.round(L / (depth ? 15 : 18));
+      for (let i = 1; i <= n; i++) {
+        const t = i / n; if (t < .16) continue;
+        const [px, py] = P(t), side = i % 2 ? 1 : -1;
+        leaf(px, py, T(t) + side * (.42 + R() * .5), (26 + R() * 24) * (1 - .32 * t) * (depth ? .82 : 1));
+      }
+      const tip = P(1); leaf(tip[0], tip[1], T(1) + (R() - .5) * .3, 30 * (depth ? .8 : 1));
+      if (!depth) for (const tt of [.3, .5, .7]) if (R() < .9) { const [px, py] = P(tt); stem(px, py, T(tt) + (R() < .5 ? 1 : -1) * (.45 + R() * .4), L * (.3 + R() * .22), 1); }
+    };
+    stem(0, 0, 0, len, 0);
+    svg.innerHTML = `<path d="${stems}" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="${leaves}" fill="currentColor"/>`;
+    el.appendChild(svg); return el;
+  }
+  const shadows = $('#shadows');
+  [
+    { seed: 11, len: 520, x: 'calc(100% + 10px)', y: '-10px', a: 146, o: .25, b: 3.5, d: 9 },
+    { seed: 27, len: 400, x: 'calc(100% + 60px)', y: '40%',   a: 171, o: .12, b: 10, d: 12 },
+    { seed: 5,  len: 440, x: '-30px',             y: '70%',   a: -22, o: .13, b: 8,  d: 11 },
+    { seed: 42, len: 300, x: '0px',               y: '4%',    a: 38,  o: .09, b: 12, d: 14 }
+  ].forEach(c => shadows.appendChild(branch(c)));
+  const fitShadows = () => root.style.setProperty('--k', clamp(Math.max(innerWidth / 430, innerHeight / 900), 1, 2.4).toFixed(2));
+
+  /* ───────────── 日落场景：p = 0 午后 → 1 入夜 ───────────── */
+  const el = id => document.getElementById(id);
+  const S = { skyG: el('skyG'), skyS: el('skyS'), skyD: el('skyD'), seaG: el('seaG'), seaS: el('seaS'), seaD: el('seaD'),
+              sun: el('sun'), disc: el('disc'), glow: el('glow'), refl: el('refl'), stars: el('stars'), haze: el('haze'),
+              far: el('plxFar'), mid: el('plxMid'), near: el('plxNear'), dk: [...document.querySelectorAll('.arch .dk')],
+              capA: el('capA'), capB: el('capB') };
+  { const R = rng(9); let h = ''; for (let i = 0; i < 26; i++) h += `<circle cx="${(R() * 300).toFixed(1)}" cy="${(8 + R() * 190).toFixed(1)}" r="${(.35 + R() * .7).toFixed(2)}" opacity="${(.45 + R() * .55).toFixed(2)}"/>`; S.stars.innerHTML = h; }
+  const SUN = [[0, [255, 244, 204]], [.5, [255, 220, 140]], [.8, [255, 160, 92]], [1, [240, 112, 74]]];
+  function sunColor(t) {
+    for (let i = 1; i < SUN.length; i++) if (t <= SUN[i][0]) {
+      const [a, ca] = SUN[i - 1], [b, cb] = SUN[i], k = (t - a) / (b - a);
+      return 'rgb(' + ca.map((v, j) => Math.round(v + (cb[j] - v) * k)).join(',') + ')';
+    }
+    return 'rgb(' + SUN[SUN.length - 1][1].join(',') + ')';
+  }
+  let P = -1;
+  function render(p) {
+    if (Math.abs(p - P) < .0005) return; P = p;
+    S.skyG.style.opacity = S.seaG.style.opacity = ss(.1, .46, p);
+    S.skyS.style.opacity = S.seaS.style.opacity = ss(.48, .8, p);
+    S.skyD.style.opacity = S.seaD.style.opacity = ss(.8, 1, p);
+    const dk = ss(.3, .96, p); S.dk.forEach(n => { n.style.opacity = dk; });
+    S.haze.style.opacity = 1 - ss(.35, .8, p) * .85;
+    const t = clamp(p / .86), x = 226 - 62 * t, y = 92 + 230 * Math.pow(t, 1.2), col = sunColor(t);
+    S.sun.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+    S.disc.setAttribute('r', (15 + 6 * t).toFixed(1)); S.disc.setAttribute('fill', col);
+    S.glow.setAttribute('r', (78 + 46 * t).toFixed(1)); S.glow.style.opacity = 1 - ss(.84, .98, p) * .8;
+    S.refl.setAttribute('transform', `translate(${x.toFixed(1)} 0)`); S.refl.setAttribute('fill', col);
+    S.refl.style.opacity = (.35 + .65 * ss(.16, .5, p)) * (1 - ss(.78, .9, p)) * .9;
+    S.stars.style.opacity = ss(.86, 1, p);
+    root.style.setProperty('--gold', (ss(.12, .6, p) * (1 - ss(.74, 1, p))).toFixed(3));
+    root.style.setProperty('--dusk', ss(.7, 1, p).toFixed(3));
+    root.style.setProperty('--shade', (1 - ss(.45, .9, p)).toFixed(3));
+    const a = 1 - ss(.4, .47, p), b = ss(.53, .6, p);
+    S.capA.style.setProperty('--o', a.toFixed(3)); S.capB.style.setProperty('--o', b.toFixed(3));
+  }
+  const journey = $('#journey'), hint = $('#scrollHint'), finale = $('#finale');
+  function onScroll() {
+    const r = journey.getBoundingClientRect(), total = journey.offsetHeight - innerHeight;
+    render(clamp(-r.top / total));
+    hint.classList.toggle('gone', scrollY > 30);
+    if (finale.getBoundingClientRect().top < innerHeight * .72) finale.classList.add('in');
+  }
+
+  /* ───────────── 视差：鼠标 / 手机倾斜，光影跟着轻轻移动 ───────────── */
+  let tx = 0, ty = 0, cx = 0, cy = 0, moving = false;
+  function parallax() {
+    cx += (tx - cx) * .06; cy += (ty - cy) * .06;
+    shadows.style.transform = `translate3d(${(cx * -16).toFixed(2)}px,${(cy * -10).toFixed(2)}px,0)`;
+    S.far.style.transform = `translate(${(cx * 1.5).toFixed(2)}px,0)`;
+    S.mid.style.transform = `translate(${(cx * 3).toFixed(2)}px,0)`;
+    S.near.style.transform = `translate(${(cx * 5).toFixed(2)}px,0)`;
+    if (Math.abs(tx - cx) + Math.abs(ty - cy) > .002) requestAnimationFrame(parallax); else moving = false;
+  }
+  const nudge = (x, y) => { tx = clamp(x, -1, 1); ty = clamp(y, -1, 1); if (!moving && !reduce) { moving = true; requestAnimationFrame(parallax); } };
+  addEventListener('pointermove', e => { if (e.pointerType === 'mouse') nudge(e.clientX / innerWidth * 2 - 1, e.clientY / innerHeight * 2 - 1); }, { passive: true });
+  if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission !== 'function') {
+    let base = null;
+    addEventListener('deviceorientation', e => {
+      if (e.gamma == null || e.beta == null) return;
+      if (base === null) base = e.beta; base += (e.beta - base) * .01;
+      nudge(e.gamma / 24, (e.beta - base) / 24);
+    }, { passive: true });
+  }
+
+  /* ───────────── 倒计时 ───────────── */
+  const cd = { d: $('#cd-d'), h: $('#cd-h'), m: $('#cd-m'), s: $('#cd-s') }, pad = n => String(n).padStart(2, '0');
+  function tick() {
+    const s = Math.max(0, Math.floor((EVENT.startUTC - Date.now()) / 1000));
+    cd.d.textContent = Math.floor(s / 86400); cd.h.textContent = pad(Math.floor(s % 86400 / 3600));
+    cd.m.textContent = pad(Math.floor(s % 3600 / 60)); cd.s.textContent = pad(s % 60);
+  }
+
+  /* ───────────── 加入日历 / 地图 ───────────── */
+  let toastTimer;
+  function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 3600); }
+  $('#cal').addEventListener('click', () => {
+    if (/MicroMessenger/i.test(navigator.userAgent)) { toast(TEXT[lang].wechat); return; }
+    const esc = s => s.replace(/([,;\\])/g, '\\$1');
+    const stamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Daisy and Chen//Save the Date//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+      'BEGIN:VEVENT', 'UID:daisy-chen-' + EVENT.dateStart + '@save-the-date', 'DTSTAMP:' + stamp,
+      'DTSTART;VALUE=DATE:' + EVENT.dateStart, 'DTEND;VALUE=DATE:' + EVENT.dateEnd,
+      'SUMMARY:' + esc(EVENT.title), 'LOCATION:' + esc(EVENT.location), 'DESCRIPTION:' + esc(EVENT.note),
+      'TRANSP:TRANSPARENT', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+    const a = document.createElement('a'); a.href = url; a.download = 'Daisy-Chen-Save-the-Date.ics';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 5000);
+    toast(TEXT[lang].cal);
+  });
+  // 地图：苹果设备用 Apple 地图；其余设备，中文 / 微信里用必应地图（国内能打开），否则用 Google 地图
+  const ua = navigator.userAgent, apple = /iPhone|iPad|iPod|Macintosh/.test(ua), wechat = /MicroMessenger/i.test(ua);
+  const mapBase = apple ? 'https://maps.apple.com/?q=' : (wechat || (navigator.language || '').toLowerCase().startsWith('zh')) ? 'https://cn.bing.com/maps?q=' : 'https://www.google.com/maps/search/?api=1&query=';
+  $('#map').href = mapBase + encodeURIComponent(EVENT.mapQuery);
+
+  // 微信安卓版：不让用户的“字体大小”设置把排版撑乱
+  const lockWxFont = () => { try { WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 }); WeixinJSBridge.on('menu:setfont', () => WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 })); } catch (e) {} };
+  if (typeof WeixinJSBridge === 'object') lockWxFont(); else document.addEventListener('WeixinJSBridgeReady', lockWxFont, false);
+
+  /* ───────────── 启动 ───────────── */
+  applyLang(); fitShadows(); tick(); setInterval(tick, 1000); onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', () => { fitShadows(); P = -1; onScroll(); });
+  const start = () => $('#cover').classList.add('in');
+  // 等字体最多 1.5 秒；等不到就直接用系统字体开场，绝不白屏
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  (document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, wait(1500)]) : Promise.resolve()).then(() => setTimeout(start, 60));
+})();
+</script>
+</body>
+</html>
