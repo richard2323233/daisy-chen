@@ -76,6 +76,19 @@ a{color:inherit}
 .lang b{font-weight:500;transition:color .3s}
 .lang b.on{color:var(--ink)}
 .lang i{font-style:normal;margin:0 .5em;opacity:.6}
+.top-r{display:flex;align-items:center;gap:16px}
+/* 音乐开关：四根细线，播放时轻轻起伏 */
+.snd{display:inline-flex;align-items:center;gap:9px;padding:8px 4px;font:500 11px/1 var(--sans);letter-spacing:.24em;color:var(--ink-3);transition:color .3s}
+html[lang="zh-CN"] .snd{font-size:12px;letter-spacing:.3em;font-weight:400}
+.snd.on{color:var(--ink)}
+.snd[hidden]{display:none}
+.bars{display:inline-flex;align-items:flex-end;gap:2px;height:11px}
+.bars i{display:block;width:1.5px;height:3px;background:currentColor;transform-origin:50% 100%}
+.snd.on .bars i{animation:eq 1.05s ease-in-out infinite alternate}
+.snd.on .bars i:nth-child(2){animation-delay:-.45s;animation-duration:.8s}
+.snd.on .bars i:nth-child(3){animation-delay:-.2s;animation-duration:1.25s}
+.snd.on .bars i:nth-child(4){animation-delay:-.7s;animation-duration:.95s}
+@keyframes eq{from{transform:scaleY(1)}to{transform:scaleY(3.6)}}
 
 main{position:relative;z-index:1}
 .label{font:500 11px/1 var(--sans);letter-spacing:.36em;text-indent:.36em;text-transform:uppercase;color:var(--ink-2)}
@@ -110,11 +123,21 @@ html[lang="zh-CN"] .for{font-style:normal;font-weight:300;font-size:13px;letter-
 .journey{height:320vh;height:calc(100dvh + 220vh);position:relative}
 .pin{
   position:-webkit-sticky;position:sticky;top:0;height:100vh;height:100dvh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(22px,4.6vh,44px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(48px,7vh,64px);
   padding:calc(64px + env(safe-area-inset-top)) 26px calc(22px + env(safe-area-inset-bottom));
 }
 .arch-wrap{position:relative;flex:none;--ah:min(43vh,440px);height:var(--ah);width:calc(var(--ah) * 300 / 440)}
-.arch-wrap::before{content:"";position:absolute;top:-9px;right:-9px;bottom:-9px;left:-9px;border:1px solid var(--hair);border-radius:999px 999px 5px 5px}
+/* 拱窗外圈的细线：底色一圈 + 一条随时间“走”完整个拱形的赭色进度线 */
+.arch-line{position:absolute;top:-9px;left:-9px;width:calc(100% + 18px);height:calc(100% + 18px);overflow:visible;pointer-events:none}
+.arch-line path{fill:none;stroke:var(--hair);stroke-width:1.1}
+.arch-line #archProg{stroke:var(--accent);stroke-width:1.5;stroke-dasharray:1;stroke-dashoffset:1}
+/* 日落时拱窗向墙面透出的暖光 */
+.arch-wrap::after{content:"";position:absolute;top:-16%;right:-34%;bottom:-12%;left:-34%;z-index:-1;pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 62%, rgba(255,170,104,.5), rgba(255,170,104,0) 70%);opacity:calc(var(--gold) * .95)}
+.clock{position:absolute;left:0;right:0;top:calc(100% + 24px);text-align:center;white-space:nowrap;
+  font:500 10px/1 var(--sans);letter-spacing:.34em;text-indent:.34em;text-transform:uppercase;color:var(--ink-3);font-variant-numeric:lining-nums tabular-nums}
+.clock b{font-weight:500;color:var(--ink-2)}
+.clock i{font-style:normal;margin:0 .7em;opacity:.6}
 .arch{position:absolute;top:0;right:0;bottom:0;left:0;border-radius:999px 999px 2px 2px;overflow:hidden;background:#C9D9DA;transform:translateZ(0)}
 .arch svg{display:block;width:100%;height:100%}
 .arch::before{content:"";position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(43,41,36,.1), inset 9px 14px 26px -14px rgba(40,30,12,.5)}
@@ -122,9 +145,28 @@ html[lang="zh-CN"] .for{font-style:normal;font-weight:300;font-size:13px;letter-
 .shimmer line{animation:drift 7s ease-in-out infinite alternate}
 .shimmer line:nth-child(2n){animation-duration:9s;animation-direction:alternate-reverse}
 @keyframes drift{from{transform:translateX(-5px)}to{transform:translateX(6px)}}
+/* 场景里一直在动的小东西：云、飞鸟振翅、帆船轻晃、倒影闪烁、星星与灯火 */
+.cloud-drift{animation:cdrift 34s ease-in-out infinite alternate}
+@keyframes cdrift{from{transform:translateX(5px)}to{transform:translateX(-9px)}}
+.bird{transform-box:fill-box;transform-origin:50% 100%;animation:flap .62s ease-in-out infinite alternate}
+.bird.b2{animation-duration:.54s;animation-delay:-.2s} .bird.b3{animation-duration:.7s;animation-delay:-.4s}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.22)}}
+.bob{transform-box:fill-box;transform-origin:50% 100%;animation:bob 3.4s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(-.5px) rotate(-1.6deg)}to{transform:translateY(.5px) rotate(1.8deg)}}
+#refl rect{transform-box:fill-box;transform-origin:50% 50%;animation:glint 1.7s ease-in-out infinite alternate}
+#refl rect:nth-child(2n){animation-duration:2.3s;animation-direction:alternate-reverse}
+#refl rect:nth-child(3n){animation-duration:1.3s}
+@keyframes glint{from{transform:scaleX(.6)}to{transform:scaleX(1.14)}}
+#stars circle:nth-child(3n),#lights circle{animation:tw 2.4s ease-in-out infinite alternate}
+#stars circle:nth-child(6n),#lights circle:nth-child(2n){animation-duration:3.3s;animation-delay:-1.2s}
+#lights circle:nth-child(3n){animation-duration:1.9s;animation-delay:-.6s}
+@keyframes tw{from{opacity:.25}to{opacity:1}}
 
 .caps{position:relative;flex:none;width:min(100%,430px);height:clamp(192px,28vh,222px)}
-.cap{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:var(--o,0);transform:translateY(calc((1 - var(--o,0)) * 14px));pointer-events:none}
+.cap{position:absolute;top:0;right:0;bottom:0;left:0;display:flex;flex-direction:column;align-items:center;text-align:center;opacity:var(--o,0);pointer-events:none}
+/* 文字逐行出现：每一行比上一行晚一点 */
+.cap > *{--k:clamp(0, calc(var(--o,0) * 3 - var(--i,0) * .45), 1);opacity:var(--k);transform:translateY(calc((1 - var(--k)) * 18px))}
+.cap > :nth-child(2){--i:1} .cap > :nth-child(3){--i:2} .cap > :nth-child(4){--i:3} .cap > :nth-child(5){--i:4}
 .cap-title{margin-top:18px;font:300 clamp(27px,7.4vw,38px)/1.12 var(--serif);letter-spacing:.005em}
 html[lang="zh-CN"] .cap-title[data-zh]{font-family:"Noto Serif SC","Songti SC",serif;font-size:clamp(22px,6vw,30px);letter-spacing:.14em;line-height:1.3}
 .cap-sub{margin-top:10px;font:italic 400 18px/1.25 var(--serif);color:var(--ink-2)}
@@ -182,7 +224,7 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
 }
 @media (max-height:600px){ .arch-wrap{--ah:40vh} .cap-title{margin-top:14px} .count{margin-top:16px} }
 @media (prefers-reduced-motion:reduce){
-  .branch,.shimmer line,.scroll i::after{animation:none}
+  .branch,.shimmer line,.scroll i::after,.snd.on .bars i,.cloud-drift,.bird,.bob,#refl rect,#stars circle,#lights circle{animation:none}
   .rv{transition:none;opacity:1;transform:none;filter:none !important}
 }
 </style>
@@ -202,7 +244,10 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
 
 <header class="top">
   <span class="mono">D · C</span>
-  <button class="lang" id="lang" type="button" aria-label="Switch language"><b data-l="zh">中</b><i>/</i><b data-l="en">EN</b></button>
+  <div class="top-r">
+    <button class="snd" id="snd" type="button" hidden aria-pressed="false" aria-label="Music"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span data-zh="音乐" data-en="Music"></span></button>
+    <button class="lang" id="lang" type="button" aria-label="Switch language"><b data-l="zh">中</b><i>/</i><b data-l="en">EN</b></button>
+  </div>
 </header>
 
 <main>
@@ -225,6 +270,11 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
   <section class="journey" id="journey">
     <div class="pin">
       <div class="arch-wrap" id="archWrap">
+        <svg class="arch-line" viewBox="0 0 318 458" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M.6,457.4 V159 A158.4,158.4 0 0 1 317.4,159 V457.4 Z"/>
+          <path id="archProg" pathLength="1" d="M.6,457.4 V159 A158.4,158.4 0 0 1 317.4,159 V457.4"/>
+        </svg>
+        <p class="clock" aria-hidden="true"><b id="clock">17:30</b><i>·</i>Deià</p>
         <div class="arch">
           <svg viewBox="0 0 300 440" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sunset over the sea at Deià, Mallorca">
             <defs>
@@ -240,6 +290,8 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
               <linearGradient id="hazeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E4" stop-opacity="0"/><stop offset="1" stop-color="#FFF6E4" stop-opacity=".5"/></linearGradient>
               <linearGradient id="reflG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset="1" stop-color="#fff" stop-opacity=".15"/></linearGradient>
               <mask id="reflM" maskUnits="userSpaceOnUse" x="-40" y="290" width="80" height="150"><rect x="-40" y="290" width="80" height="150" fill="url(#reflG)"/></mask>
+              <linearGradient id="cloudG" x1="0" y1="0" x2="1" y2="0"><stop class="cs" offset="0" stop-color="#fff" stop-opacity="0"/><stop class="cs" offset=".3" stop-color="#fff"/><stop class="cs" offset=".7" stop-color="#fff"/><stop class="cs" offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <mask id="moonM" maskUnits="userSpaceOnUse" x="50" y="46" width="40" height="40"><rect x="50" y="46" width="40" height="40" fill="#fff"/><circle cx="75.200" cy="62.600" r="8.800" fill="#000"/></mask>
               <!-- 左侧远岬 + 右侧三层特拉蒙塔纳山脊，由远及近 -->
               <path id="rL"  d="M-12,259 C22,251 52,247 80,255 C101,261 112,277 130,286 C137,289.500 143,291.500 152,292 L-12,292 Z"/>
               <path id="rR3" d="M312,148 C282,165 252,200 226,236 C207,262 192,282 172,292 L312,292 Z"/>
@@ -247,6 +299,7 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
               <path id="rR1" d="M312,243 C297,250 285,262 274,272 C266,280 260,287 252,292 L312,292 Z"/>
             </defs>
 
+            <g id="cam">
             <g id="sky">
               <rect width="300" height="294" fill="url(#skyDay)"/>
               <rect id="skyG" width="300" height="294" fill="url(#skyGold)" opacity="0"/>
@@ -254,9 +307,22 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
               <rect id="skyD" width="300" height="294" fill="url(#skyDusk)" opacity="0"/>
             </g>
             <g id="stars" fill="#FFF8E6" opacity="0"></g>
+            <circle id="moon" cx="71" cy="66" r="10" fill="#FFF6DC" mask="url(#moonM)" opacity="0"/>
             <g id="sun" transform="translate(226 92)">
               <circle id="glow" r="78" fill="url(#sunGlow)"/>
               <circle id="disc" r="15" fill="#FFF4CC"/>
+            </g>
+            <g id="clouds" opacity=".55"><g class="cloud-drift">
+              <rect x="14" y="116" width="124" height="4.600" rx="2.300" fill="url(#cloudG)"/>
+              <rect x="150" y="148" width="158" height="3.600" rx="1.800" fill="url(#cloudG)"/>
+              <rect x="-14" y="192" width="136" height="4.200" rx="2.100" fill="url(#cloudG)"/>
+              <rect x="92" y="224" width="118" height="3" rx="1.500" fill="url(#cloudG)"/>
+              <rect x="176" y="252" width="130" height="2.600" rx="1.300" fill="url(#cloudG)"/>
+            </g></g>
+            <g id="birds" opacity="0" fill="none" stroke="#4B4A50" stroke-width=".9" stroke-linecap="round" stroke-linejoin="round">
+              <path class="bird" d="M-5,0 Q-2.6,-3.4 0,0 Q2.6,-3.4 5,0"/>
+              <g transform="translate(14 6) scale(.8)"><path class="bird b2" d="M-5,0 Q-2.6,-3.4 0,0 Q2.6,-3.4 5,0"/></g>
+              <g transform="translate(-10 10) scale(.68)"><path class="bird b3" d="M-5,0 Q-2.6,-3.4 0,0 Q2.6,-3.4 5,0"/></g>
             </g>
             <g id="sea">
               <rect y="292" width="300" height="150" fill="url(#seaDay)"/>
@@ -277,6 +343,14 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
                 <line x1="22" y1="304" x2="50" y2="304"/><line x1="236" y1="311" x2="266" y2="311"/><line x1="70" y1="326" x2="108" y2="326"/>
                 <line x1="198" y1="346" x2="240" y2="346"/><line x1="30" y1="368" x2="76" y2="368"/><line x1="214" y1="396" x2="268" y2="396"/>
               </g>
+              <g id="boat" transform="translate(56 301)">
+                <rect x="-4" y="2.500" width="9.500" height=".7" rx=".35" fill="#fff" opacity=".32"/>
+                <g class="bob">
+                  <path d="M.2,-1.2 L.2,-10.6 L5.6,-1.2 Z M-.9,-1.2 L-.9,-8.4 L-4.4,-1.2 Z" fill="#FDFBF4"/>
+                  <path d="M-5,0 L6.2,0 L4.8,1.7 L-3.8,1.7 Z" fill="#F1EBDC"/>
+                  <g class="dk" opacity="0"><path d="M.2,-1.2 L.2,-10.6 L5.6,-1.2 Z M-.9,-1.2 L-.9,-8.4 L-4.4,-1.2 Z" fill="#3B3654"/><path d="M-5,0 L6.2,0 L4.8,1.7 L-3.8,1.7 Z" fill="#2E2A45"/></g>
+                </g>
+              </g>
             </g>
             <g id="plxFar">
               <use href="#rL" fill="#B3C2BE"/><use class="dk" href="#rL" fill="#5F6385" opacity="0"/>
@@ -285,6 +359,11 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
             <g id="plxMid"><use href="#rR2" fill="#9AA98F"/><use class="dk" href="#rR2" fill="#3F4464" opacity="0"/></g>
             <g id="plxNear"><use href="#rR1" fill="#7B8965"/><use class="dk" href="#rR1" fill="#262B45" opacity="0"/></g>
             <rect id="haze" y="232" width="300" height="60" fill="url(#hazeG)"/>
+            <g id="lights" opacity="0" fill="#FFD9A0">
+              <circle cx="262" cy="263" r=".9"/><circle cx="281" cy="255" r="1"/><circle cx="296" cy="249" r=".8"/><circle cx="271" cy="271" r=".8"/><circle cx="288" cy="266" r="1"/>
+              <circle cx="277" cy="282" r=".9"/><circle cx="299" cy="277" r=".8"/><circle cx="264" cy="284" r=".7"/><circle cx="290" cy="286" r=".8"/>
+            </g>
+            </g>
           </svg>
         </div>
       </div>
@@ -411,53 +490,89 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
   const S = { skyG: el('skyG'), skyS: el('skyS'), skyD: el('skyD'), seaG: el('seaG'), seaS: el('seaS'), seaD: el('seaD'),
               sun: el('sun'), disc: el('disc'), glow: el('glow'), refl: el('refl'), stars: el('stars'), haze: el('haze'),
               far: el('plxFar'), mid: el('plxMid'), near: el('plxNear'), dk: [...document.querySelectorAll('.arch .dk')],
-              capA: el('capA'), capB: el('capB') };
+              capA: el('capA'), capB: el('capB'), cam: el('cam'), clouds: el('clouds'), cs: [...document.querySelectorAll('#cloudG .cs')], birds: el('birds'),
+              boat: el('boat'), moon: el('moon'), lights: el('lights'), prog: el('archProg'), clock: el('clock'), wrap: el('archWrap') };
   { const R = rng(9); let h = ''; for (let i = 0; i < 26; i++) h += `<circle cx="${(R() * 300).toFixed(1)}" cy="${(8 + R() * 190).toFixed(1)}" r="${(.35 + R() * .7).toFixed(2)}" opacity="${(.45 + R() * .55).toFixed(2)}"/>`; S.stars.innerHTML = h; }
   const SUN = [[0, [255, 244, 204]], [.5, [255, 220, 140]], [.8, [255, 160, 92]], [1, [240, 112, 74]]];
-  function sunColor(t) {
-    for (let i = 1; i < SUN.length; i++) if (t <= SUN[i][0]) {
-      const [a, ca] = SUN[i - 1], [b, cb] = SUN[i], k = (t - a) / (b - a);
+  const CLOUD = [[0, [255, 255, 255]], [.42, [255, 238, 210]], [.7, [251, 176, 140]], [.86, [201, 130, 146]], [1, [98, 98, 138]]];
+  function ramp(stops, t) {
+    for (let i = 1; i < stops.length; i++) if (t <= stops[i][0]) {
+      const [a, ca] = stops[i - 1], [b, cb] = stops[i], k = (t - a) / (b - a);
       return 'rgb(' + ca.map((v, j) => Math.round(v + (cb[j] - v) * k)).join(',') + ')';
     }
-    return 'rgb(' + SUN[SUN.length - 1][1].join(',') + ')';
+    return 'rgb(' + stops[stops.length - 1][1].join(',') + ')';
   }
-  let P = -1;
-  function render(p) {
-    if (Math.abs(p - P) < .0005) return; P = p;
+  let P = -1, E = -1, clockTxt = '';
+  // p：钉住之后的进度（0 午后 → 1 入夜）；e：这一屏滑入视野的进度（0 → 1）
+  function render(p, e) {
+    if (Math.abs(p - P) < .0005 && Math.abs(e - E) < .001) return; P = p; E = e;
     S.skyG.style.opacity = S.seaG.style.opacity = ss(.1, .46, p);
     S.skyS.style.opacity = S.seaS.style.opacity = ss(.48, .8, p);
     S.skyD.style.opacity = S.seaD.style.opacity = ss(.8, 1, p);
     const dk = ss(.3, .96, p); S.dk.forEach(n => { n.style.opacity = dk; });
     S.haze.style.opacity = 1 - ss(.35, .8, p) * .85;
-    const t = clamp(p / .86), x = 226 - 62 * t, y = 92 + 230 * Math.pow(t, 1.2), col = sunColor(t);
+    // 太阳与海面倒影
+    const t = clamp(p / .86), x = 226 - 62 * t, y = 92 + 230 * Math.pow(t, 1.2), col = ramp(SUN, t);
     S.sun.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
     S.disc.setAttribute('r', (15 + 6 * t).toFixed(1)); S.disc.setAttribute('fill', col);
     S.glow.setAttribute('r', (78 + 46 * t).toFixed(1)); S.glow.style.opacity = 1 - ss(.84, .98, p) * .8;
     S.refl.setAttribute('transform', `translate(${x.toFixed(1)} 0)`); S.refl.setAttribute('fill', col);
     S.refl.style.opacity = (.35 + .65 * ss(.16, .5, p)) * (1 - ss(.78, .9, p)) * .9;
+    // 镜头慢慢拉远
+    S.cam.setAttribute('transform', `translate(165 292) scale(${(1.13 - .13 * ss(0, 1, p)).toFixed(4)}) translate(-165 -292)`);
+    // 云：向左飘，被夕阳染色
+    const cc = ramp(CLOUD, p); S.cs.forEach(n => n.setAttribute('stop-color', cc));
+    S.clouds.setAttribute('transform', `translate(${(-30 * p).toFixed(1)} 0)`);
+    S.clouds.style.opacity = (.55 + .3 * ss(.4, .72, p) - .35 * ss(.85, 1, p)).toFixed(3);
+    // 归鸟：黄昏时从右向左飞过
+    const bp = clamp((p - .16) / .46);
+    S.birds.setAttribute('transform', `translate(${(318 - 350 * bp).toFixed(1)} ${(170 - 36 * bp).toFixed(1)})`);
+    S.birds.style.opacity = (ss(0, .12, bp) * (1 - ss(.86, 1, bp)) * .85).toFixed(3);
+    // 帆船、月亮、星星、山间灯火
+    S.boat.setAttribute('transform', `translate(${(56 + 74 * p).toFixed(1)} 301)`);
+    const night = ss(.82, 1, p);
+    S.moon.style.opacity = night.toFixed(3); S.moon.setAttribute('transform', `translate(0 ${((1 - night) * 12).toFixed(1)})`);
     S.stars.style.opacity = ss(.86, 1, p);
+    S.lights.style.opacity = ss(.8, .98, p);
+    // 拱窗外圈的进度线 & 当地时刻（约 17:30 → 20:40，九月中旬 Deià 的日落在 20:00 前后）
+    S.prog.style.strokeDashoffset = (1 - p).toFixed(4);
+    const mins = Math.round(17 * 60 + 30 + p * 190), txt = pad(Math.floor(mins / 60)) + ':' + pad(mins % 60);
+    if (txt !== clockTxt) S.clock.textContent = clockTxt = txt;
+    // 拱窗入场：从下方升起并放大
+    const k = reduce ? 1 : ss(.12, .95, e);
+    S.wrap.style.transform = k >= 1 ? '' : `translate3d(0,${((1 - k) * 64).toFixed(1)}px,0) scale(${(.9 + .1 * k).toFixed(4)})`;
+    S.wrap.style.opacity = reduce ? 1 : ss(.08, .6, e).toFixed(3);
+    // 墙面色调与枝影
     root.style.setProperty('--gold', (ss(.12, .6, p) * (1 - ss(.74, 1, p))).toFixed(3));
     root.style.setProperty('--dusk', ss(.7, 1, p).toFixed(3));
     root.style.setProperty('--shade', (1 - ss(.45, .9, p)).toFixed(3));
-    const a = 1 - ss(.4, .47, p), b = ss(.53, .6, p);
+    // 文字：先“日期”，后“地点”
+    const a = Math.min(reduce ? 1 : ss(.5, 1, e), 1 - ss(.36, .46, p)), b = ss(.52, .64, p);
     S.capA.style.setProperty('--o', a.toFixed(3)); S.capB.style.setProperty('--o', b.toFixed(3));
+    if (a > .5 && !counted) startCount();
+    applyParallax();
   }
   const journey = $('#journey'), hint = $('#scrollHint'), finale = $('#finale');
   function onScroll() {
     const r = journey.getBoundingClientRect(), total = journey.offsetHeight - innerHeight;
-    render(clamp(-r.top / total));
+    render(clamp(-r.top / total), clamp(1 - r.top / innerHeight));
     hint.classList.toggle('gone', scrollY > 30);
     if (finale.getBoundingClientRect().top < innerHeight * .72) finale.classList.add('in');
   }
 
   /* ───────────── 视差：鼠标 / 手机倾斜，光影跟着轻轻移动 ───────────── */
   let tx = 0, ty = 0, cx = 0, cy = 0, moving = false;
+  // 鼠标 / 倾斜的位移，加上随日落推移的位移：枝影被越拉越斜，远近山脊错开
+  function applyParallax() {
+    const q = P < 0 ? 0 : P, d = q - .5;
+    shadows.style.transform = `translate3d(${(cx * -16 + q * 44).toFixed(2)}px,${(cy * -10 + q * 16).toFixed(2)}px,0) skewX(${(q * -6).toFixed(2)}deg)`;
+    S.far.style.transform = `translate(${(cx * 1.5 - d * 3).toFixed(2)}px,0)`;
+    S.mid.style.transform = `translate(${(cx * 3 - d * 6).toFixed(2)}px,0)`;
+    S.near.style.transform = `translate(${(cx * 5 - d * 10).toFixed(2)}px,0)`;
+  }
   function parallax() {
     cx += (tx - cx) * .06; cy += (ty - cy) * .06;
-    shadows.style.transform = `translate3d(${(cx * -16).toFixed(2)}px,${(cy * -10).toFixed(2)}px,0)`;
-    S.far.style.transform = `translate(${(cx * 1.5).toFixed(2)}px,0)`;
-    S.mid.style.transform = `translate(${(cx * 3).toFixed(2)}px,0)`;
-    S.near.style.transform = `translate(${(cx * 5).toFixed(2)}px,0)`;
+    applyParallax();
     if (Math.abs(tx - cx) + Math.abs(ty - cy) > .002) requestAnimationFrame(parallax); else moving = false;
   }
   const nudge = (x, y) => { tx = clamp(x, -1, 1); ty = clamp(y, -1, 1); if (!moving && !reduce) { moving = true; requestAnimationFrame(parallax); } };
@@ -473,10 +588,17 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
 
   /* ───────────── 倒计时 ───────────── */
   const cd = { d: $('#cd-d'), h: $('#cd-h'), m: $('#cd-m'), s: $('#cd-s') }, pad = n => String(n).padStart(2, '0');
+  let countK = reduce ? 1 : 0, counted = false;      // 第一次出现时，数字从 0 滚到实际值
   function tick() {
-    const s = Math.max(0, Math.floor((EVENT.startUTC - Date.now()) / 1000));
-    cd.d.textContent = Math.floor(s / 86400); cd.h.textContent = pad(Math.floor(s % 86400 / 3600));
-    cd.m.textContent = pad(Math.floor(s % 3600 / 60)); cd.s.textContent = pad(s % 60);
+    const s = Math.max(0, Math.floor((EVENT.startUTC - Date.now()) / 1000)), f = v => Math.round(v * countK);
+    cd.d.textContent = f(Math.floor(s / 86400)); cd.h.textContent = pad(f(Math.floor(s % 86400 / 3600)));
+    cd.m.textContent = pad(f(Math.floor(s % 3600 / 60))); cd.s.textContent = pad(f(s % 60));
+  }
+  function startCount() {
+    counted = true; if (reduce) return;
+    const t0 = Date.now(), iv = setInterval(() => {
+      const u = clamp((Date.now() - t0) / 1500); countK = 1 - Math.pow(1 - u, 3); tick(); if (u >= 1) clearInterval(iv);
+    }, 40);
   }
 
   /* ───────────── 加入日历 / 地图 ───────────── */
@@ -504,6 +626,51 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
   // 微信安卓版：不让用户的“字体大小”设置把排版撑乱
   const lockWxFont = () => { try { WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 }); WeixinJSBridge.on('menu:setfont', () => WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 })); } catch (e) {} };
   if (typeof WeixinJSBridge === 'object') lockWxFont(); else document.addEventListener('WeixinJSBridgeReady', lockWxFont, false);
+
+  /* ───────────── 背景音乐 ─────────────
+     把音频文件放到 assets/ 下，命名为 music.mp3 或 music.m4a 即可；没有文件时，音乐按钮不会出现。
+     浏览器不允许网页一打开就出声：微信 iOS 里会自动播放，其他环境在第一次点按屏幕时开始。 */
+  // 有了音频文件后，把文件名填进 src，例如 src: ['assets/music.m4a']；留空则完全不启用，也不会发任何请求
+  const MUSIC = { src: [], volume: .55 };
+  (() => {
+    const snd = $('#snd'), bgm = new Audio();
+    bgm.loop = true; bgm.preload = 'metadata'; bgm.setAttribute('playsinline', '');
+    bgm.volume = .5; const canFade = bgm.volume === .5;       // iOS 不允许网页调音量，就不做淡入淡出
+    let want = true, on = false, resume = false, fadeT, idx = 0;
+    const setOn = v => { on = v; snd.classList.toggle('on', v); snd.setAttribute('aria-pressed', String(v)); };
+    const fadeTo = (v, done) => {
+      clearInterval(fadeT);
+      if (!canFade) { done && done(); return; }
+      fadeT = setInterval(() => { const d = v - bgm.volume; if (Math.abs(d) <= .04) { bgm.volume = v; clearInterval(fadeT); done && done(); } else bgm.volume = clamp(bgm.volume + Math.sign(d) * .04); }, 45);
+    };
+    const play = () => {
+      if (canFade && bgm.paused) bgm.volume = 0;
+      let p; try { p = bgm.play(); } catch (e) { return Promise.resolve(false); }
+      return (p && p.then ? p : Promise.resolve()).then(() => { setOn(true); fadeTo(MUSIC.volume); return true; }, () => false);
+    };
+    const stop = () => { setOn(false); fadeTo(0, () => bgm.pause()); };
+    snd.addEventListener('click', () => { if (on) { want = false; stop(); } else { want = true; play(); } });
+
+    const evs = ['pointerup', 'touchend', 'click', 'keydown'];
+    const tryPlay = e => {
+      if (!want || on || (e && e.target && e.target.closest && e.target.closest('#snd'))) return;
+      play().then(ok => { if (ok) evs.forEach(ev => removeEventListener(ev, tryPlay, true)); });
+    };
+    const arm = () => {
+      snd.hidden = false;
+      evs.forEach(ev => addEventListener(ev, tryPlay, true));
+      tryPlay();
+      const wx = () => { try { WeixinJSBridge.invoke('getNetworkType', {}, () => tryPlay()); } catch (e) {} };
+      if (typeof WeixinJSBridge === 'object') wx(); else document.addEventListener('WeixinJSBridgeReady', wx, false);
+    };
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { if (on) { resume = true; clearInterval(fadeT); bgm.pause(); } }
+      else if (resume) { resume = false; if (want) bgm.play().catch(() => setOn(false)); }
+    });
+    bgm.addEventListener('loadedmetadata', arm, { once: true });
+    bgm.addEventListener('error', () => { if (++idx < MUSIC.src.length) bgm.src = MUSIC.src[idx]; });
+    if (MUSIC.src.length) bgm.src = MUSIC.src[0];
+  })();
 
   /* ───────────── 启动 ───────────── */
   applyLang(); fitShadows(); tick(); setInterval(tick, 1000); onScroll();
