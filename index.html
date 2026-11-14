@@ -628,10 +628,11 @@ html[lang="zh-CN"] .btn{font-size:13px;letter-spacing:.4em;text-indent:.4em;font
   if (typeof WeixinJSBridge === 'object') lockWxFont(); else document.addEventListener('WeixinJSBridgeReady', lockWxFont, false);
 
   /* ───────────── 背景音乐 ─────────────
-     把音频文件放到 assets/ 下，命名为 music.mp3 或 music.m4a 即可；没有文件时，音乐按钮不会出现。
+     assets/music.m4a 是为这张请柬原创的配乐，由 tools/make_bgm.py 生成（不含任何第三方素材）。
+     想换音乐：替换这个文件即可；文件不存在时，音乐按钮不会出现。
      浏览器不允许网页一打开就出声：微信 iOS 里会自动播放，其他环境在第一次点按屏幕时开始。 */
   // 有了音频文件后，把文件名填进 src，例如 src: ['assets/music.m4a']；留空则完全不启用，也不会发任何请求
-  const MUSIC = { src: [], volume: .55 };
+  const MUSIC = { src: ['assets/music.m4a'], volume: .55 };
   (() => {
     const snd = $('#snd'), bgm = new Audio();
     bgm.loop = true; bgm.preload = 'metadata'; bgm.setAttribute('playsinline', '');

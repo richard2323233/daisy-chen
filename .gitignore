@@ -3,3 +3,5 @@
 # 原始素材不随网站发布
 assets/original.jpg
 assets/names-mask.png
+# 配乐生成脚本只在本地用
+tools/
